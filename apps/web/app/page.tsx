@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Card } from "@repo/ui/card";
 import { Gradient } from "@repo/ui/gradient";
+import { Button } from "@repo/ui/shadcn/button";
 import { TurborepoLogo } from "@repo/ui/turborepo-logo";
 import HomeScreen from "@web/features/HomeScreen";
 
@@ -55,6 +56,8 @@ export default function Page() {
           </a>
         </div>
       </div>
+
+      <Button>Click me</Button>
 
       <div className="relative flex place-items-center ">
         <div className="font-sans w-auto pb-16 pt-[48px] md:pb-24 lg:pb-32 md:pt-16 lg:pt-20 flex justify-between gap-8 items-center flex-col relative z-0">
