@@ -11,8 +11,9 @@ app
     try {
       const client = createGeminiClient();
 
-      const message = "こんにちは";
-      const aiResponse = await client.generateResponse(message);
+      const body = await c.req.json();
+
+      const aiResponse = await client.generateResponse(body.message);
       console.log("AI Response:", aiResponse);
 
       const response: ChatResponse = {
