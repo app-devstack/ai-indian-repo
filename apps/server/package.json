@@ -1,7 +1,17 @@
 {
-  "name": "server",
+  "name": "@repo/server",
+  "version": "0.0.0",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/types.js"
+  },
   "scripts": {
+    "build": "tsc",
+    "build:types": "tsc --emitDeclarationOnly",
+    "check-types": "tsc --noEmit",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
     "cf-typegen": "wrangler types --env-interface CloudflareBindings"
@@ -11,6 +21,10 @@
     "hono": "^4.9.7"
   },
   "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "typescript": "5.9.2",
     "wrangler": "^4.4.0"
   }
 }

@@ -1,9 +1,15 @@
-import { createGeminiClient, GeminiConfig, uuidV7 } from "@repo/lib";
+import { createGeminiClient, uuidV7 } from "@repo/lib";
 import { Hono } from "hono";
+import { JwtVariables } from "hono/jwt";
 
-const app = new Hono();
+/**
+ * Hono インスタンスの生成
+ */
+export const createApp = () => new Hono<{ Variables: JwtVariables }>();
 
-app
+const app = createApp();
+
+const router = app
   .get("/", (c) => {
     return c.text("Hello Hono!");
   })
@@ -15,6 +21,13 @@ app
 
       const aiResponse = await client.generateResponse(body.message);
       console.log("AI Response:", aiResponse);
+
+      interface ChatResponse {
+        id: string;
+        message: string;
+        timestamp: string;
+        // conversationId: string;
+      }
 
       const response: ChatResponse = {
         id: uuidV7(),
@@ -34,11 +47,6 @@ app
     }
   });
 
-export default app;
+export default router;
 
-interface ChatResponse {
-  id: string;
-  message: string;
-  timestamp: string;
-  // conversationId: string;
-}
+export type AppType = typeof router;
