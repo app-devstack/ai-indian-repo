@@ -1,11 +1,20 @@
+// import { users } from "./router";
 import { createGeminiClient, uuidV7 } from "@repo/lib";
 import { Hono } from "hono";
 import { JwtVariables } from "hono/jwt";
+import { options } from "@repo/db/index";
+import { drizzle } from "drizzle-orm/d1";
+
+type Bindings = {
+  // DB: D1Database;
+  DB: any;
+  GEMINI_API_KEY: string;
+};
 
 /**
  * Hono インスタンスの生成
  */
-export const createApp = () => new Hono<{ Variables: JwtVariables }>();
+export const createApp = () => new Hono<{ Variables: JwtVariables; Bindings: Bindings }>();
 
 const app = createApp();
 
@@ -15,7 +24,7 @@ const router = app
   })
   .post("/chat", async (c) => {
     try {
-      const client = createGeminiClient();
+      const client = createGeminiClient({ apiKey: c.env.GEMINI_API_KEY });
 
       const body = await c.req.json();
 
@@ -45,7 +54,21 @@ const router = app
 
       return c.json(errorResponse, 500);
     }
+  })
+  .get("/users", async (c) => {
+    try {
+      const db = drizzle(c.env.DB, options);
+
+      const data = await db.query.users.findMany();
+      return c.json({ data: data });
+    } catch (error) {
+      return c.json({ error }, 500);
+    }
+  })
+  .post("/users", (c) => {
+    return c.json({ message: "user created successfully!" });
   });
+// .route("/users", users);
 
 export default router;
 

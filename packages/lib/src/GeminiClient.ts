@@ -10,7 +10,7 @@ import {
 } from "@google/genai";
 import { SYSTEM_PROMPT } from "./ai/systemPrompts";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 const AI_MODEL = "gemini-2.0-flash-001";
 
@@ -47,7 +47,8 @@ export class GeminiClient {
   // private functionCallingMode: FunctionCallingConfigMode = FunctionCallingConfigMode.AUTO;
 
   constructor(config: GeminiConfig = {}) {
-    const apiKey = config.apiKey || GEMINI_API_KEY;
+    // const apiKey = config.apiKey || GEMINI_API_KEY;
+    const apiKey = config.apiKey;
 
     if (!apiKey) {
       throw new Error(

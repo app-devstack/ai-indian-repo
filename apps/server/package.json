@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@repo/lib": "*",
+    "@repo/db": "*",
     "hono": "^4.9.7"
   },
   "devDependencies": {
