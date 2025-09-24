@@ -1,13 +1,14 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "ai-indian-server",
   "main": "src/index.ts",
   "compatibility_date": "2025-09-18",
   "d1_databases": [
     {
-      "binding": "ai_indian",
+      "binding": "DB",
       "database_name": "ai-indian",
       "database_id": "075c7038-497c-4ab9-8e6b-c469f743e37f",
+      "migrations_dir": "../../packages/db/drizzle",
     },
   ],
   // "compatibility_flags": [
