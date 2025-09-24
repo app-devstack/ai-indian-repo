@@ -19,6 +19,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@repo/lib": "*",
     "@repo/eslint-config": "*",
     "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
