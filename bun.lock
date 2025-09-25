@@ -105,6 +105,7 @@
       },
       "devDependencies": {
         "@repo/eslint-config": "*",
+        "@repo/lib": "*",
         "@repo/tailwind-config": "*",
         "@repo/typescript-config": "*",
         "@types/node": "^20",
