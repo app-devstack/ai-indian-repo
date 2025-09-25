@@ -10,8 +10,3 @@ export interface ChatResponse {
   timestamp: string;
   conversationId: string;
 }
-
-export interface ChatError {
-  error: string;
-  code?: number;
-}

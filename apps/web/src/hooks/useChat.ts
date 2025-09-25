@@ -3,14 +3,18 @@ import { postChatMessage } from "@web/_client/fetcher";
 import { ChatRequest, ChatResponse } from "@web/types/chat";
 
 export interface UseChatMutationOptions {
-  onSuccess?: (data: ChatResponse, variables: ChatRequest) => void;
+  onSuccess?: (data: ChatResponse | null, variables: ChatRequest) => void;
   onError?: (error: Error, variables: ChatRequest) => void;
-  onSettled?: (data: ChatResponse | undefined, error: Error | null, variables: ChatRequest) => void;
+  onSettled?: (
+    data: ChatResponse | null | undefined,
+    error: Error | null,
+    variables: ChatRequest
+  ) => void;
 }
 
 export const useChatMutation = (
   options?: UseChatMutationOptions
-): UseMutationResult<ChatResponse, Error, ChatRequest> => {
+): UseMutationResult<ChatResponse | null, Error, ChatRequest> => {
   return useMutation({
     mutationFn: postChatMessage,
     onSuccess: options?.onSuccess,

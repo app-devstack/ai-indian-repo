@@ -26,7 +26,7 @@ const AIIndianApp = () => {
   const chatMutation = useChatMutation({
     onSuccess: (response) => {
       const apiMessage = {
-        text: response.message,
+        text: response?.message || "Sorry, I couldn't process that request.",
         isUser: false,
         timestamp: new Date(),
       };

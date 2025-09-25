@@ -1,18 +1,13 @@
-import { ChatRequest, ChatResponse, ChatError } from "@web/types/chat";
-import { apiClient } from "./api";
+import { ChatRequest, ChatResponse } from "@web/types/chat";
+import { apiClient, callRpc } from "./api";
 
-export const postChatMessage = async (data: ChatRequest): Promise<ChatResponse> => {
-  const response = await apiClient.chat.$post({
-    json: data,
-  });
+export const postChatMessage = async (data: ChatRequest): Promise<ChatResponse | null> => {
+  const response = await callRpc(apiClient.chat.$post({ json: data }));
 
-  if (!response.ok) {
-    const errorData = (await response.json().catch(() => ({
-      error: "Unknown error occurred",
-      code: response.status,
-    }))) as ChatError;
-    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+  if (response.error) {
+    console.error("Error:", response.error);
+    // return;
   }
 
-  return (await response.json()) as ChatResponse;
+  return response.data as ChatResponse | null;
 };
