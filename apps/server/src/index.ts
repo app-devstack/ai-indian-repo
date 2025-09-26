@@ -6,6 +6,7 @@ import { options } from "@repo/db/index";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import { ContentfulStatusCode } from "hono/utils/http-status";
+import { cors } from 'hono/cors';
 
 type Bindings = {
   // DB: D1Database;
@@ -45,6 +46,12 @@ export const CommonErrors = {
 const app = createApp();
 
 const router = app
+  .use('*', cors({
+    origin: ['https://ai-indian-repo.vercel.app', 'http://localhost:3000'], // TODO; あとで環境変数にする
+    allowHeaders: ['Content-Type', 'Authorization'],
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true,
+  }))
   .onError((err, c) => {
     if (err instanceof AppError) return c.text(err.message, err.status);
     return c.text("Something went wrong", 500);
