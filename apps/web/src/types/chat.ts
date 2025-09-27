@@ -6,9 +6,6 @@ export interface ChatRequest {
   conversationId?: string;
 }
 
-export interface ChatResponse {
-  id: string;
-  message: string;
-}
+export type ChatResponse = ChatMessageType;
 
 export type ChatMessageStateType = Omit<ChatMessageType, "userId">;
