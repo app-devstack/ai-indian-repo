@@ -32,9 +32,9 @@ export const useAIIndian = () => {
 
       const apiMessage = {
         id: uuidV7(),
-        content: response.message,
+        content: response.content,
         role: "model",
-        createdAt: new Date(response.timestamp),
+        createdAt: new Date(response.createdAt),
       } satisfies ChatMessageStateType;
       setMessages((prev) => [...prev, apiMessage]);
       setIndianState("typing");

@@ -1,12 +1,13 @@
 // import { users } from "./router";
+import { ChatMessageType } from "@repo/db/types";
 import { createGeminiClient, uuidV7 } from "@repo/lib";
 import { Context, Hono } from "hono";
 import { JwtVariables } from "hono/jwt";
-import { options } from "@repo/db/index";
+import { options } from "@repo/db";
 import { drizzle } from "drizzle-orm/d1";
 import { HTTPException } from "hono/http-exception";
 import { ContentfulStatusCode } from "hono/utils/http-status";
-import { cors } from 'hono/cors';
+import { cors } from "hono/cors";
 
 type Bindings = {
   // DB: D1Database;
@@ -46,12 +47,15 @@ export const CommonErrors = {
 const app = createApp();
 
 const router = app
-  .use('*', cors({
-    origin: ['https://ai-indian-repo.vercel.app', 'http://localhost:3000'], // TODO; あとで環境変数にする
-    allowHeaders: ['Content-Type', 'Authorization'],
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true,
-  }))
+  .use(
+    "*",
+    cors({
+      origin: ["https://ai-indian-repo.vercel.app", "http://localhost:3000"], // TODO; あとで環境変数にする
+      allowHeaders: ["Content-Type", "Authorization"],
+      allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+    })
+  )
   .onError((err, c) => {
     if (err instanceof AppError) return c.text(err.message, err.status);
     return c.text("Something went wrong", 500);
@@ -61,26 +65,36 @@ const router = app
   })
   .post("/chat", async (c) => {
     try {
+      // 開発中の一時レスポンス用(トークン節約)
+      // return c.json({
+      //   id: uuidV7(),
+      //   content: `**sample messages**\n*ほげ*`,
+      //   createdAt: new Date(),
+      //   role: "model",
+      //   userId: "",
+      // } satisfies ChatMessageType);
+
       const client = createGeminiClient({ apiKey: c.env.GEMINI_API_KEY });
 
       const body = await c.req.json();
 
+      /*
+      TODO
+        - DBにユーザとAIのメッセージを保存
+        - 過去チャットの参照もここらへんでやってから,generateResponseにわたす
+          (`async generateResponse(message: string, history?: Content[]){}`)
+      */
+
       const aiResponse = await client.generateResponse(body.message);
       console.log("AI Response:", aiResponse);
 
-      interface ChatResponse {
-        id: string;
-        message: string;
-        timestamp: string;
-        // conversationId: string;
-      }
-
-      const response: ChatResponse = {
+      const response = {
         id: uuidV7(),
-        message: aiResponse,
-        timestamp: new Date().toISOString(),
-        // conversationId: conversationId,
-      };
+        content: aiResponse,
+        role: "model",
+        createdAt: new Date(),
+        userId: "",
+      } satisfies ChatMessageType;
 
       return c.json(response);
     } catch (error) {

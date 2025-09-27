@@ -124,6 +124,8 @@ export class GeminiClient {
         return finalResponse.text || "";
       }
 
+      console.log(response); // AIからの返答全体を表示
+
       return response.text || "";
     } catch (error) {
       console.error("Error generating response:", error);
