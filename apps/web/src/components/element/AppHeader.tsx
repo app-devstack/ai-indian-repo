@@ -1,11 +1,12 @@
-import React from "react";
-
-const Header = () => {
+/**
+ * アプリヘッダー
+ */
+export default function AppHeader() {
   return (
-    <div className="text-white px-4 py-2.5 flex items-center justify-between">
+    <div className="text-primary-foreground px-4 py-2.5 flex items-center justify-between">
       <div className="grid gap-0.5">
         <h1 className="text-xl font-bold">AI Indian</h1>
-        <p className="text-gray-200 text-xs">Advanced AI Assistant</p>
+        <p className="text-muted/50 text-xs">Advanced AI Assistant</p>
       </div>
 
       <div className="flex items-center space-x-2">
@@ -14,6 +15,4 @@ const Header = () => {
       </div>
     </div>
   );
-};
-
-export default Header;
+}

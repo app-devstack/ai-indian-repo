@@ -1,6 +1,11 @@
+import { useEngineerStatusStore } from "@web/store/useEngineerStatusStore";
 import React from "react";
 
-const EngineerStatus = ({ indianState, fatigue }: { indianState: string; fatigue: number }) => {
+/**
+ * エンジニアの疲労度ステータス表示
+ */
+export default function EngineerStatus() {
+  const { indianState, fatigue } = useEngineerStatusStore();
   const getIndianAnimation = () => {
     switch (indianState) {
       case "thinking":
@@ -50,6 +55,4 @@ const EngineerStatus = ({ indianState, fatigue }: { indianState: string; fatigue
       </div>
     </div>
   );
-};
-
-export default EngineerStatus;
+}

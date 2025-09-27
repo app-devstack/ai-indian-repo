@@ -1,3 +1,5 @@
+import { ChatMessageType } from "@repo/db/types";
+
 export interface ChatRequest {
   message: string;
   userId?: string;
@@ -7,6 +9,6 @@ export interface ChatRequest {
 export interface ChatResponse {
   id: string;
   message: string;
-  timestamp: string;
-  conversationId: string;
 }
+
+export type ChatMessageStateType = Omit<ChatMessageType, "userId">;

@@ -1,6 +1,11 @@
-import React from "react";
-
-const MaintenanceScreen = ({ recoverFromMaintenance }: { recoverFromMaintenance: () => void }) => {
+/**
+ * `疲労度マックス`メンテナンス中画面
+ */
+export default function MaintenanceScreen({
+  recoverFromMaintenance,
+}: {
+  recoverFromMaintenance: () => void;
+}) {
   return (
     <div className="min-h-screen bg-gray-600 flex items-center justify-center p-6">
       <div
@@ -26,6 +31,4 @@ const MaintenanceScreen = ({ recoverFromMaintenance }: { recoverFromMaintenance:
       </div>
     </div>
   );
-};
-
-export default MaintenanceScreen;
+}
