@@ -1,4 +1,5 @@
 import { ChatRequest, ChatResponse } from "@web/types/chat";
+
 import { apiClient, callRpc } from "./api";
 
 export const postChatMessage = async (data: ChatRequest): Promise<ChatResponse | null> => {

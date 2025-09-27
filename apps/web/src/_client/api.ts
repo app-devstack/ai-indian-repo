@@ -1,5 +1,5 @@
-import { ClientResponse, hc } from "hono/client";
 import type { AppType } from "@repo/server";
+import { ClientResponse, hc } from "hono/client";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787";
 

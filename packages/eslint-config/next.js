@@ -5,6 +5,9 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginReact from "eslint-plugin-react";
 import globals from "globals";
 import pluginNext from "@next/eslint-plugin-next";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import unusedImports from "eslint-plugin-unused-imports";
+import importPlugin from "eslint-plugin-import";
 import { config as baseConfig } from "./base.js";
 
 /**
@@ -42,8 +45,54 @@ export const nextJsConfig = [
     settings: { react: { version: "detect" } },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    plugins: {
+      "simple-import-sort": simpleImportSort,
+      "unused-imports": unusedImports,
+      import: importPlugin,
+    },
+    rules: {
+      // Import sorting
+      "simple-import-sort/imports": "warn",
+      "simple-import-sort/exports": "warn",
+
+      // Import organization
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error",
+
+      // Unused imports
+      "unused-imports/no-unused-imports": "warn",
+
+      // TypeScript specific rules (型情報不要なもののみ)
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: ".*",
+        },
+      ],
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        { allowTernary: true, allowShortCircuit: true },
+      ],
+
+      // General rules
+      "prefer-const": "error",
+    },
+  },
+  // TypeScript型情報が必要なルール（プロジェクト設定があるときのみ）
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-unnecessary-type-assertion": "error",
+      "@typescript-eslint/no-non-null-assertion": "error",
     },
   },
 ];
