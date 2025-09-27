@@ -1,9 +1,9 @@
 import * as schema from "./schema";
 import { DrizzleConfig } from "drizzle-orm";
-// import { drizzle } from "drizzle-orm/d1";
+
 export * from "./schema";
 
-/** The name of the database file to open. */
+// import { drizzle } from "drizzle-orm/d1";
 
 export const options = {
   casing: "snake_case" as const,

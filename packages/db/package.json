@@ -5,7 +5,8 @@
     "dist"
   ],
   "exports": {
-    "./*": "./dist/*.js"
+    ".": "./dist/index.js",
+    "./types": "./dist/types.d.ts"
   },
   "license": "MIT",
   "scripts": {
